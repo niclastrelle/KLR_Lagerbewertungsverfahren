@@ -31,26 +31,33 @@ def permanent_fifo():
     i = 1
     while i < len(list):
         #Wenn Abgang
-        if int(list[i][0])<0:
-            while int(list[i][0])<0:
+        if float(list[i][0])<0:
+            while float(list[i][0])<0:
                 spot = find(list)
-                if int(list[spot][0])<int(list[i][0]):
+                if spot==None:
+                    break
+                if float(list[spot][0])<abs(float(list[i][0])):
+                    list[i][0] = str(float(list[spot][0])+float(list[i][0]))
                     list[spot][0] = "0"
-                    list[i][0] = str(int(list[spot][0])+int(list[i][0]))
                 else:
-                    list[spot][0]=str(int(list[spot][0])+int(list[i][0]))
+                    list[spot][0]=str(float(list[spot][0])+float(list[i][0]))
                     list[i][0]="0"
-
-
         i += 1
     print(list)
+    print(calculate(list))
 
 def find(list):
     i = 0
     for a in list:
-        if int(a[0]) > 0:
+        if float(a[0]) > 0:
             return i
         i+=1
+def calculate(list):
+    result = 0
+    for a in list:
+        if float(a[0])>0:
+            result = result + float(a[0])*float(a[1])
+    return result
 
 permanent_fifo()
 if __name__ == "__main__":
