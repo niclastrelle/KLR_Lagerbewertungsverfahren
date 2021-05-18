@@ -27,11 +27,12 @@ Zur Ausführung in die Konsole eingeben:
 python main.py <Bewertungsmethode>
 ```
 
-(to be added)
-Entsprechende Bewertungsmethoden können sein:
+to be added
+Mögliche Bewertungsmethoden:
 - 
 
-** Interpretation der Ergebnisse
+
+## Interpretation der Ergebnisse
 Das Ergebnis ist eine Liste, welche die aktuellen Bestände darstellt. Bei Bedarf kann ein weiterer print-Befehl auskommentiert werden, um die Zwischenschritte auch auszugeben.
 Diese Stelle ist markiert.
 
