@@ -11,6 +11,8 @@ def main(arg):
         permanent_fifo()
     if arg == "perm_lifo":
         permanent_lifo()
+    if arg == "per_fifo":
+        periodic_fifo()
 
 def test():
     with open("people.csv","r") as file:
@@ -27,6 +29,8 @@ def periodic_fifo():
         list = []
         for row in reader:
             list.append(row)
+
+
 
 
 def permanent_fifo():
