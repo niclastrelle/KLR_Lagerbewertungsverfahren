@@ -24,6 +24,7 @@ def test():
             list.append(row)
     print(list)
 
+
 def periodic_fifo():
     #preprocessing
     with open("people.csv","r") as file:
@@ -63,8 +64,46 @@ def periodic_fifo():
     print(list)
     print("bewerteter Endbestand: {}\nbewertete Zugänge: {}\nKosten durch Abgänge: {} \ndurchschnittliche Kosten: {:.2f} euro/unit".format(bew_end,bew_mat,mat_cost,av_cost))
 
+
 def periodic_lifo():
-    pass
+    #preprocessing
+    with open("people.csv","r") as file:
+        reader = csv.reader(file)
+        list = []
+        for row in reader:
+            list.append(row)
+    #processing
+    end = 0 #Endbestand
+    for a in list:
+        end = end + float(a[0])
+    print("Endbestand: " + str(end))
+
+    #last index is still in the depot when the rest gets picked first, which means the last prize has to be taken.
+    min = 0
+    bew_end = 0
+    while end > 0:
+        min = find_fifo(list, min)
+        if float(list[min][0]) > end:
+            bew_end = bew_end + end * float(list[min][1])
+            end = end - end
+        else:
+            bew_end = bew_end + abs(float(list[min][0]))*float(list[min][1])
+            end = end - abs(float(list[min][0]))
+        min += 1
+
+    bew_mat = 0
+    outs = 0
+    for a in list:
+        if float(a[0])>0:
+            bew_mat = bew_mat + float(a[0])*float(a[1])
+        else:
+            outs = outs + abs(float(a[0]))
+
+    mat_cost = bew_mat - bew_end
+    av_cost = mat_cost/outs
+    print(list)
+    print("bewerteter Endbestand: {}\nbewertete Zugänge: {}\nKosten durch Abgänge: {} \ndurchschnittliche Kosten: {:.2f} euro/unit".format(bew_end,bew_mat,mat_cost,av_cost))
+
 
 def permanent_fifo():
     #preprocessing
@@ -73,7 +112,7 @@ def permanent_fifo():
         list = []
         for row in reader:
             list.append(row)
-
+    print(list)
     #processing
     i = 1
     used_material = 0
@@ -81,7 +120,7 @@ def permanent_fifo():
         #Wenn Abgang
         if float(list[i][0])<0:
             while float(list[i][0])<0:
-                spot = find_fifo(list)
+                spot = find_fifo(list,0)
                 if spot==None:
                     break
                 if float(list[spot][0])<abs(float(list[i][0])):
@@ -97,6 +136,7 @@ def permanent_fifo():
         i += 1
     print(list)
     print("bewerteter Endbestand: {}\nbewerteter Materialverbrauch: {}".format(calculate(list), used_material))
+
 
 def permanent_lifo():
     #preprocessing
@@ -132,12 +172,16 @@ def permanent_lifo():
     print("bewerteter Endbestand: {}\nbewerteter Materialverbrauch: {}".format(calculate(list),used_material))
     #print(calculate(list))
 
-def find_fifo(list):
-    i = 0
-    for a in list:
-        if float(a[0]) > 0:
+
+def find_fifo(list,min):
+    if min==None:
+        i = 0
+    i=min
+    while i<len(list):
+        if float(list[i][0]) > 0:
             return i
         i+=1
+
 
 def find_lifo(list, min):
     i = min
@@ -147,6 +191,7 @@ def find_lifo(list, min):
             return i
         i-=1
 
+
 def calculate(list):
     result = 0
     for a in list:
@@ -154,7 +199,7 @@ def calculate(list):
             result = result + float(a[0])*float(a[1])
     return result
 
-periodic_fifo()
+
 if __name__ == "__main__":
     try:
         main(sys.argv[1])
