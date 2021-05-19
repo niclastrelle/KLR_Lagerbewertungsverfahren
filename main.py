@@ -13,6 +13,8 @@ def main(arg):
         permanent_lifo()
     if arg == "per_fifo":
         periodic_fifo()
+    if arg == "per_lifo":
+        periodic_lifo()
 
 def test():
     with open("people.csv","r") as file:
@@ -60,6 +62,9 @@ def periodic_fifo():
     av_cost = mat_cost/outs
     print(list)
     print("bewerteter Endbestand: {}\nbewertete Zugänge: {}\nKosten durch Abgänge: {} \ndurchschnittliche Kosten: {:.2f} euro/unit".format(bew_end,bew_mat,mat_cost,av_cost))
+
+def periodic_lifo():
+    pass
 
 def permanent_fifo():
     #preprocessing
