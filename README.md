@@ -12,7 +12,7 @@ Im Spezifischen sind schon integriert:
 
 ## Schrittanleitung zur Nutzung
 
-1. Erstelle eine .csv Datei in dem folgenden Format: 
+Erstelle eine .csv Datei in dem folgenden Format: 
 
 Quantität, Preis
 
