@@ -6,8 +6,8 @@ Im Spezifischen sind schon integriert:
 2. permanent LiFo
 3. periodisch FiFo
 4. periodisch LiFo
-6. HiFo
-7. LoFo
+5. HiFo
+6. LoFo
 
 
 ## Schrittanleitung zur Nutzung
@@ -16,10 +16,9 @@ Erstelle eine .csv Datei in dem folgenden Format:
 
 Quantität, Preis
 
+Diese muss im selben Verzeichnis, wie die main.py Datei. Der Standard-Seperator ist ",". Es muss also für Kommazahlen ein "." verwendet werden.
 Falls es nur einen Abgang gibt, dann wird der Preis weggelassen und ein negatives Vorzeichen vor dem Wert angegeben.
 Es gibt eine Beispieldatei. Daran kann sich orientiert werden.
-
-Die .csv Datei im selben Verzeichnis, wie main.py ablegen.
 
 Zur Ausführung in die Konsole eingeben:
 
