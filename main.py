@@ -20,8 +20,8 @@ def main(arg):
         periodic_hifo()
     if arg == "perm_hifo":
         permanent_hifo()
-    if arg == "per_lifo":
-        periodic_lifo()
+    if arg == "per_lofo":
+        periodic_lofo()
     if arg == "perm_lifo":
         permanent_lifo()
 
@@ -77,10 +77,48 @@ def periodic_hifo():
 def permanent_hifo():
     pass
 
-def periodic_lifo():
-    pass
+def periodic_lofo():
+    #preprocessing
+    with open("people.csv","r") as file:
+        reader = csv.reader(file)
+        list = []
+        for row in reader:
+            list.append(row)
+    #processing
+    end = 0 #Endbestand
+    for a in list:
+        end = end + float(a[0])
+    print("Endbestand: " + str(end) + " Einheiten")
 
-def permanent_lifo():
+    #always beginning with highest
+    min = 0
+    bew_end = 0
+    while end > 0:
+        min = find_lofo(list)
+        if float(list[min][0]) > end:
+            bew_end = bew_end + end * float(list[min][1])
+            list[min][0] = float(list[min][0])-end
+            end = end - end
+        else:
+            bew_end = bew_end + abs(float(list[min][0]))*float(list[min][1])
+            end = end - abs(float(list[min][0]))
+            list[min][0] = 0
+        min -= 1
+
+    bew_mat = 0
+    outs = 0
+    for a in list:
+        if float(a[0])>0:
+            bew_mat = bew_mat + float(a[0])*float(a[1])
+        else:
+            outs = outs + abs(float(a[0]))
+
+    mat_cost = bew_mat - bew_end
+    av_cost = mat_cost/outs
+    print(list)
+    print("bewerteter Endbestand: {}\nbewertete Zugänge: {}\nKosten durch Abgänge: {} \ndurchschnittliche Kosten: {:.2f} euro/unit".format(bew_end,bew_mat,mat_cost,av_cost))
+
+def permanent_lofo():
     pass
 
 def periodic_fifo():
@@ -234,6 +272,17 @@ def permanent_lifo():
     print("bewerteter Endbestand: {}\nbewerteter Materialverbrauch: {}".format(calculate(list),used_material))
     #print(calculate(list))
 
+def find_lofo(list):
+    check = []
+    for a in list:
+        if float(a[0]) > 0:
+            check.append(float(a[1]))
+        else:
+            check.append(0)
+    max_val = max(check)
+    index = check.index(max_val)
+    return index
+
 def find_hifo(list):
     check = []
     for a in list:
@@ -271,7 +320,7 @@ def calculate(list):
             result = result + float(a[0])*float(a[1])
     return result
 
-periodic_hifo()
+periodic_lofo()
 if __name__ == "__main__":
     try:
         main(sys.argv[1])
