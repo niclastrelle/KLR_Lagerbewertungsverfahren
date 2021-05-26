@@ -18,12 +18,12 @@ def main(arg):
         periodic_lifo()
     if arg == "per_hifo":
         periodic_hifo()
-    if arg == "perm_hifo":
+    if arg == "perm_hifo": #not added
         permanent_hifo()
     if arg == "per_lofo":
         periodic_lofo()
-    if arg == "perm_lifo":
-        permanent_lifo()
+    if arg == "perm_lofo": #not added
+        permanent_lofo()
 
 def test():
     with open("people.csv","r") as file:
