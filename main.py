@@ -3,6 +3,7 @@ import sys
 
 #format of the csv file has to be: modification as double, cost per unit as double
 #at first, always the beginning state
+#no checks if outtake > intake
 
 def main(arg):
     if arg == "test":
@@ -15,6 +16,14 @@ def main(arg):
         periodic_fifo()
     if arg == "per_lifo":
         periodic_lifo()
+    if arg == "per_hifo":
+        periodic_hifo()
+    if arg == "perm_hifo":
+        permanent_hifo()
+    if arg == "per_lifo":
+        periodic_lifo()
+    if arg == "perm_lifo":
+        permanent_lifo()
 
 def test():
     with open("people.csv","r") as file:
@@ -24,6 +33,55 @@ def test():
             list.append(row)
     print(list)
 
+def periodic_hifo():
+    #preprocessing
+    with open("people.csv","r") as file:
+        reader = csv.reader(file)
+        list = []
+        for row in reader:
+            list.append(row)
+    #processing
+    end = 0 #Endbestand
+    for a in list:
+        end = end + float(a[0])
+    print("Endbestand: " + str(end) + " Einheiten")
+
+    #always beginning with highest
+    min = 0
+    bew_end = 0
+    while end > 0:
+        min = find_hifo(list)
+        if float(list[min][0]) > end:
+            bew_end = bew_end + end * float(list[min][1])
+            list[min][0] = float(list[min][0])-end
+            end = end - end
+        else:
+            bew_end = bew_end + abs(float(list[min][0]))*float(list[min][1])
+            end = end - abs(float(list[min][0]))
+            list[min][0] = 0
+        min -= 1
+
+    bew_mat = 0
+    outs = 0
+    for a in list:
+        if float(a[0])>0:
+            bew_mat = bew_mat + float(a[0])*float(a[1])
+        else:
+            outs = outs + abs(float(a[0]))
+
+    mat_cost = bew_mat - bew_end
+    av_cost = mat_cost/outs
+    print(list)
+    print("bewerteter Endbestand: {}\nbewertete Zugänge: {}\nKosten durch Abgänge: {} \ndurchschnittliche Kosten: {:.2f} euro/unit".format(bew_end,bew_mat,mat_cost,av_cost))
+
+def permanent_hifo():
+    pass
+
+def periodic_lifo():
+    pass
+
+def permanent_lifo():
+    pass
 
 def periodic_fifo():
     #preprocessing
@@ -36,7 +94,7 @@ def periodic_fifo():
     end = 0 #Endbestand
     for a in list:
         end = end + float(a[0])
-    print("Endbestand: " + str(end))
+    print("Endbestand: " + str(end) + "Einheiten")
 
     #last index is still in the depot when the rest gets picked first, which means the last prize has to be taken.
     min = len(list)-1
@@ -46,9 +104,11 @@ def periodic_fifo():
         if float(list[min][0]) > end:
             bew_end = bew_end + end * float(list[min][1])
             end = end - end
+            #list[min][0] = float(list[min][0]) - end
         else:
             bew_end = bew_end + abs(float(list[min][0]))*float(list[min][1])
             end = end - abs(float(list[min][0]))
+            #list[min][0] = 0
         min -= 1
 
     bew_mat = 0
@@ -76,7 +136,7 @@ def periodic_lifo():
     end = 0 #Endbestand
     for a in list:
         end = end + float(a[0])
-    print("Endbestand: " + str(end))
+    print("Endbestand: " + str(end) + " Einheiten")
 
     #last index is still in the depot when the rest gets picked first, which means the last prize has to be taken.
     min = 0
@@ -86,9 +146,11 @@ def periodic_lifo():
         if float(list[min][0]) > end:
             bew_end = bew_end + end * float(list[min][1])
             end = end - end
+            # list[min][0] = float(list[min][0]) - end
         else:
             bew_end = bew_end + abs(float(list[min][0]))*float(list[min][1])
             end = end - abs(float(list[min][0]))
+            # list[min][0] = 0
         min += 1
 
     bew_mat = 0
@@ -172,6 +234,16 @@ def permanent_lifo():
     print("bewerteter Endbestand: {}\nbewerteter Materialverbrauch: {}".format(calculate(list),used_material))
     #print(calculate(list))
 
+def find_hifo(list):
+    check = []
+    for a in list:
+        if float(a[0]) > 0:
+            check.append(float(a[1]))
+        else:
+            check.append(max(check)+1)
+    max_val = min(check)
+    index = check.index(max_val)
+    return index
 
 def find_fifo(list,min):
     if min==None:
@@ -199,16 +271,10 @@ def calculate(list):
             result = result + float(a[0])*float(a[1])
     return result
 
-
+periodic_hifo()
 if __name__ == "__main__":
     try:
         main(sys.argv[1])
     except:
         print("no arguments found - select a procedure") #add -h
     pass
-
-
-
-
-
-
