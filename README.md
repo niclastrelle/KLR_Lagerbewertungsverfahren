@@ -7,7 +7,7 @@ Im Spezifischen sind schon integriert:
 3. periodisch FiFo
 4. periodisch LiFo
 6. HiFo
-7. LoFi
+7. LoFo
 
 
 ## Schrittanleitung zur Nutzung
