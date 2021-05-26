@@ -27,9 +27,9 @@ Zur Ausführung in die Konsole eingeben:
 python main.py <Bewertungsmethode>
 ```
 
-## Interpretation der Ergebnisse
+## Hinweise zur Interpretation der Ergebnisse
 ### permanent:
 Das Ergebnis ist eine Liste, welche die aktuellen Bestände darstellt. Bei Bedarf kann ein weiterer print-Befehl auskommentiert werden, um die Zwischenschritte auch auszugeben.
 Diese Stelle ist markiert.
 
-Der zweite Wert ist der Gesamtwert des Lagers. 
+Ergebnisse werden in der Konsole ausgegeben
