@@ -27,7 +27,6 @@ python main.py <Bewertungsmethode>
 ```
 
 ## Hinweise zur Interpretation der Ergebnisse
-### permanent:
 Das Ergebnis ist eine Liste, welche die aktuellen Bestände darstellt. Bei Bedarf kann ein weiterer print-Befehl auskommentiert werden, um die Zwischenschritte auch auszugeben.
 Diese Stelle ist markiert.
 
