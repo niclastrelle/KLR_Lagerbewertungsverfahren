@@ -57,14 +57,33 @@ def durchschnittspreismethode():
         else:
             Abgaenge = Abgaenge + abs(float(a[0]))
     Bestand = Menge - Abgaenge
-    Durchschnittswert = AK / Menge
-    Endbestand = Bestand * Durchschnittswert
-    print("Durchschnittskosten: {} \nAbgänge: {} \nAnschaffungskosten: {} \nEndbestand: {} ".format(Durchschnittswert, Abgaenge, AK, Endbestand))
-
+    Durchschnittspreis = AK / Menge
+    Endbestand = Bestand * Durchschnittspreis
+    print("Durchschnittskosten: {} \nAbgänge: {} \nAnschaffungskosten: {} \nEndbestand: {} ".format(Durchschnittspreis, Abgaenge, AK, Endbestand))
     pass
 
 def gleitende_durchschnittspreismethode():
-
+    #preprocessing
+    with open("people.csv","r") as file:
+        reader = csv.reader(file)
+        list = []
+        for row in reader:
+            list.append(row)
+    Menge = 0
+    AK = 0
+    i = 0
+    for a in list:
+        if float(a[0]) > 0:
+            Menge = Menge + float(a[0])
+            AK = AK + float(a[0])*float(a[1])
+        else:
+            Durchschnittspreis = AK / Menge
+            AK = AK - abs(float(a[0])) * Durchschnittspreis
+            print(str(i) + ". Durchschnittspreis: " + str(Durchschnittspreis))
+            Menge = Menge - abs(float(a[0]))
+            i += 1
+    Durchschnittspreis = AK / Menge
+    print("Durchschnittskosten: {} \nEndbestand: {} ".format(Durchschnittspreis, AK))
     pass
 
 def periodic_hifo():
@@ -354,7 +373,7 @@ def calculate(list):
             result = result + float(a[0])*float(a[1])
     return result
 
-durchschnittspreismethode()
+gleitende_durchschnittspreismethode()
 if __name__ == "__main__":
     try:
         main(sys.argv[1])
