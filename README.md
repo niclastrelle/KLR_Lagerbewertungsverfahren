@@ -20,7 +20,7 @@ Erstelle eine .csv Datei in dem folgenden Format:
 
 Quantität, Preis
 
-Diese muss im selben Verzeichnis, wie die main.py Datei. Der Standard-Seperator ist ",". Es muss also für Kommazahlen ein "." verwendet werden.
+Diese muss im selben Verzeichnis, wie die Lagerbewertungsverfahren.py Datei befinden. Der Standard-Seperator ist ",". Es muss also für Kommazahlen ein "." verwendet werden.
 Falls es nur einen Abgang gibt, dann wird der Preis weggelassen und ein negatives Vorzeichen vor dem Wert angegeben.
 Es gibt eine Beispieldatei. Daran kann sich orientiert werden.
 
