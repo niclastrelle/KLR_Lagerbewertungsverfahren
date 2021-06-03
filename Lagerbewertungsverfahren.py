@@ -22,7 +22,7 @@ def main(arg):
         permanent_hifo()
     if arg == "per_lofo":
         periodic_lofo()
-    if arg == "perm_lofo": #not added
+    if arg == "perm_lofo":
         permanent_lofo()
     if arg == "dm":
         durchschnittspreismethode()
@@ -80,11 +80,11 @@ def gleitende_durchschnittspreismethode():
             Durchschnittspreis = round(AK / Menge, 2)
             AK = AK - abs(float(a[0])) * Durchschnittspreis
             Abgangsbewertung = abs(float(a[0])) * Durchschnittspreis
-            print("-----\n{}. Durchlauf: \nDurchschnittspreis: {} \naktuelle Bestandsbewertung: {} \naktuelle Abgangsbewertung: {}".format(i, Durchschnittspreis, AK, Abgangsbewertung))
+            print("-----\n{}. Durchlauf: \nDurchschnittspreis: {} \naktuelle Bestandsbewertung: {} \naktuelle Abgangsbewertung: {}".format(i, Durchschnittspreis, round(AK,2), round(Abgangsbewertung,2)))
             Menge = Menge - abs(float(a[0]))
             i += 1
     Durchschnittspreis = AK / Menge
-    print("-----\nDurchschnittskosten: {} \nEndbestand: {} ".format(Durchschnittspreis, AK))
+    print("-----\nDurchschnittskosten: {} \nEndbestand: {} ".format(round(Durchschnittspreis,2), round(AK)))
     pass
 
 def periodic_hifo():
