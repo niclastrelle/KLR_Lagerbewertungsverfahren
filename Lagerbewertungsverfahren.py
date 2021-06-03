@@ -24,6 +24,11 @@ def main(arg):
         periodic_lofo()
     if arg == "perm_lofo": #not added
         permanent_lofo()
+    if arg == "dm":
+        durchschnittspreismethode()
+    if arg == "gl_dm":
+        gleitende_durchschnittspreismethode()
+
 
 def test():
     with open("people.csv","r") as file:
@@ -32,6 +37,35 @@ def test():
         for row in reader:
             list.append(row)
     print(list)
+
+def durchschnittspreismethode():
+    #preprocessing
+    with open("people.csv","r") as file:
+        reader = csv.reader(file)
+        list = []
+        for row in reader:
+            list.append(row)
+    #processing
+    #sum all quantities and costs
+    Menge = 0
+    AK = 0
+    Abgaenge = 0
+    for a in list:
+        if float(a[0])>0:
+            Menge = Menge + float(a[0])
+            AK = AK + float(a[0])*float(a[1])
+        else:
+            Abgaenge = Abgaenge + abs(float(a[0]))
+    Bestand = Menge - Abgaenge
+    Durchschnittswert = AK / Menge
+    Endbestand = Bestand * Durchschnittswert
+    print("Durchschnittskosten: {} \nAbgänge: {} \nAnschaffungskosten: {} \nEndbestand: {} ".format(Durchschnittswert, Abgaenge, AK, Endbestand))
+
+    pass
+
+def gleitende_durchschnittspreismethode():
+
+    pass
 
 def periodic_hifo():
     #preprocessing
@@ -320,7 +354,7 @@ def calculate(list):
             result = result + float(a[0])*float(a[1])
     return result
 
-periodic_lofo()
+durchschnittspreismethode()
 if __name__ == "__main__":
     try:
         main(sys.argv[1])
