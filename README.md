@@ -2,12 +2,16 @@
 
 Dieses Programm ermöglicht die automatische Bewertung von Lagerbeständen mittels standardisierter Verfahren.
 Im Spezifischen sind schon integriert:
-1. permanent FiFo
-2. permanent LiFo
-3. periodisch FiFo
-4. periodisch LiFo
-5. HiFo
-6. LoFo
+1. permanent FiFo - "perm_fifo"
+2. periodisch FiFo - "per_fifo"
+3. permanent LiFo - "perm_lifo"
+4. periodisch LiFo - "per_lifo"
+5. periodisch HiFo - "per_hifo"
+6. permanent HiFo - "perm_hifo"
+7. periodisch LoFo - "per_lofo"
+8. permanent LoFo - "perm_lofo"
+9. periodische Durchschnittsmethode - "dm"
+10. gleitende Durchschnittsmethode - "gl_dm"
 
 
 ## Schrittanleitung zur Nutzung
