@@ -57,7 +57,7 @@ def durchschnittspreismethode():
         else:
             Abgaenge = Abgaenge + abs(float(a[0]))
     Bestand = Menge - Abgaenge
-    Durchschnittspreis = AK / Menge
+    Durchschnittspreis = round(AK / Menge, 2)
     Endbestand = Bestand * Durchschnittspreis
     print("Durchschnittskosten: {} \nAbgänge: {} \nAnschaffungskosten: {} \nEndbestand: {} ".format(Durchschnittspreis, Abgaenge, AK, Endbestand))
     pass
@@ -71,19 +71,20 @@ def gleitende_durchschnittspreismethode():
             list.append(row)
     Menge = 0
     AK = 0
-    i = 0
+    i = 1
     for a in list:
         if float(a[0]) > 0:
             Menge = Menge + float(a[0])
             AK = AK + float(a[0])*float(a[1])
         else:
-            Durchschnittspreis = AK / Menge
+            Durchschnittspreis = round(AK / Menge, 2)
             AK = AK - abs(float(a[0])) * Durchschnittspreis
-            print(str(i) + ". Durchschnittspreis: " + str(Durchschnittspreis))
+            Abgangsbewertung = abs(float(a[0])) * Durchschnittspreis
+            print("-----\n{}. Durchlauf: \nDurchschnittspreis: {} \naktuelle Bestandsbewertung: {} \naktuelle Abgangsbewertung: {}".format(i, Durchschnittspreis, AK, Abgangsbewertung))
             Menge = Menge - abs(float(a[0]))
             i += 1
     Durchschnittspreis = AK / Menge
-    print("Durchschnittskosten: {} \nEndbestand: {} ".format(Durchschnittspreis, AK))
+    print("-----\nDurchschnittskosten: {} \nEndbestand: {} ".format(Durchschnittspreis, AK))
     pass
 
 def periodic_hifo():
@@ -185,7 +186,7 @@ def periodic_fifo():
     end = 0 #Endbestand
     for a in list:
         end = end + float(a[0])
-    print("Endbestand: " + str(end) + "Einheiten")
+    print("Endbestand: " + str(end) + " Einheiten")
 
     #last index is still in the depot when the rest gets picked first, which means the last prize has to be taken.
     min = len(list)-1
@@ -365,7 +366,6 @@ def find_lifo(list, min):
             return i
         i-=1
 
-
 def calculate(list):
     result = 0
     for a in list:
@@ -373,7 +373,6 @@ def calculate(list):
             result = result + float(a[0])*float(a[1])
     return result
 
-gleitende_durchschnittspreismethode()
 if __name__ == "__main__":
     try:
         main(sys.argv[1])
