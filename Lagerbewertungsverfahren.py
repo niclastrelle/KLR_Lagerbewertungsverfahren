@@ -18,7 +18,7 @@ def main(arg):
         periodic_lifo()
     if arg == "per_hifo":
         periodic_hifo()
-    if arg == "perm_hifo": #not added
+    if arg == "perm_hifo":
         permanent_hifo()
     if arg == "per_lofo":
         periodic_lofo()
@@ -129,6 +129,40 @@ def periodic_hifo():
     print("bewerteter Endbestand: {}\nbewertete Zugänge: {}\nKosten durch Abgänge: {} \ndurchschnittliche Kosten: {:.2f} euro/unit".format(bew_end,bew_mat,mat_cost,av_cost))
 
 def permanent_hifo():
+    #preprocessing
+    with open("people.csv","r") as file:
+        reader = csv.reader(file)
+        list = []
+        for row in reader:
+            list.append(row)
+    print(list)
+    #processing
+    i = 1
+    used_material = 0
+    while i < len(list):
+        #Wenn Abgang
+        if float(list[i][0])<0:
+            while float(list[i][0])<0:
+                spot = find_lofo(list, i)
+                if spot==None:
+                    break
+                if float(list[spot][0])<abs(float(list[i][0])):
+                    used_material = used_material + abs(float(list[spot][0])) * float(list[spot][1])
+                    bew_abg = abs(float(list[spot][0])) * float(list[spot][1])
+                    list[i][0] = str(float(list[spot][0])+float(list[i][0]))
+                    list[spot][0] = "0"
+                    print("------\n{}.Durchlauf: \nbewerteter Abgang: {}".format(i, bew_abg))
+                else:
+                    used_material = used_material + abs(float(list[i][0])) * float(list[spot][1])
+                    bew_abg = abs(float(list[i][0])) * float(list[spot][1])
+                    list[spot][0]=str(float(list[spot][0])+float(list[i][0]))
+                    list[i][0]="0"
+                    print("------\n{}.Durchlauf: \nbewerteter Abgang: {}".format(i, bew_abg))
+            #Wenn Schritte erwünscht: Hier auskommentieren
+            #print(list)
+        i += 1
+    print(list)
+    print("bewerteter Endbestand: {}\nbewerteter Materialverbrauch: {}".format(calculate(list), used_material))
     pass
 
 def periodic_lofo():
@@ -173,6 +207,40 @@ def periodic_lofo():
     print("bewerteter Endbestand: {}\nbewertete Zugänge: {}\nKosten durch Abgänge: {} \ndurchschnittliche Kosten: {:.2f} euro/unit".format(bew_end,bew_mat,mat_cost,av_cost))
 
 def permanent_lofo():
+    #preprocessing
+    with open("people.csv","r") as file:
+        reader = csv.reader(file)
+        list = []
+        for row in reader:
+            list.append(row)
+    print(list)
+    #processing
+    i = 1
+    used_material = 0
+    while i < len(list):
+        #Wenn Abgang
+        if float(list[i][0])<0:
+            while float(list[i][0])<0:
+                spot = find_hifo(list, i)
+                if spot==None:
+                    break
+                if float(list[spot][0])<abs(float(list[i][0])):
+                    used_material = used_material + abs(float(list[spot][0])) * float(list[spot][1])
+                    bew_abg = abs(float(list[spot][0])) * float(list[spot][1])
+                    list[i][0] = str(float(list[spot][0])+float(list[i][0]))
+                    list[spot][0] = "0"
+                    print("------\n{}.Durchlauf: \nbewerteter Abgang: {}".format(i, bew_abg))
+                else:
+                    used_material = used_material + abs(float(list[i][0])) * float(list[spot][1])
+                    bew_abg = abs(float(list[i][0])) * float(list[spot][1])
+                    list[spot][0]=str(float(list[spot][0])+float(list[i][0]))
+                    list[i][0]="0"
+                    print("------\n{}.Durchlauf: \nbewerteter Abgang: {}".format(i, bew_abg))
+            #Wenn Schritte erwünscht: Hier auskommentieren
+            #print(list)
+        i += 1
+    print(list)
+    print("bewerteter Endbestand: {}\nbewerteter Materialverbrauch: {}".format(calculate(list), used_material))
     pass
 
 def periodic_fifo():
@@ -279,12 +347,16 @@ def permanent_fifo():
                     break
                 if float(list[spot][0])<abs(float(list[i][0])):
                     used_material = used_material + abs(float(list[spot][0])) * float(list[spot][1])
+                    bew_abg = abs(float(list[spot][0])) * float(list[spot][1])
                     list[i][0] = str(float(list[spot][0])+float(list[i][0]))
                     list[spot][0] = "0"
+                    print("------\n{}.Durchlauf: \nbewerteter Abgang: {}".format(i, bew_abg))
                 else:
                     used_material = used_material + abs(float(list[i][0])) * float(list[spot][1])
+                    bew_abg = abs(float(list[i][0])) * float(list[spot][1])
                     list[spot][0]=str(float(list[spot][0])+float(list[i][0]))
                     list[i][0]="0"
+                    print("------\n{}.Durchlauf: \nbewerteter Abgang: {}".format(i, bew_abg))
             #Wenn Schritte erwünscht: Hier auskommentieren
             #print(list)
         i += 1
@@ -299,7 +371,7 @@ def permanent_lifo():
         list = []
         for row in reader:
             list.append(row)
-
+    abgang = 1
     #processing
     i = 1
     used_material = 0
@@ -312,12 +384,16 @@ def permanent_lifo():
                     break
                 if float(list[spot][0])<abs(float(list[i][0])):
                     used_material = used_material + abs(float(list[spot][0])) * float(list[spot][1])
+                    bew_abg = abs(float(list[spot][0])) * float(list[spot][1])
                     list[i][0] = str(float(list[spot][0])+float(list[i][0]))
                     list[spot][0] = "0"
+                    print("------\n{}.Durchlauf: \nbewerteter Abgang: {}".format(i, bew_abg))
                 else:
                     used_material = used_material + abs(float(list[i][0])) * float(list[spot][1])
+                    bew_abg = abs(float(list[i][0])) * float(list[spot][1])
                     list[spot][0]=str(float(list[spot][0])+float(list[i][0]))
                     list[i][0]="0"
+                    print("------\n{}.Durchlauf: \nbewerteter Abgang: {}".format(i, bew_abg))
             #Wenn Schritte erwünscht: Hier auskommentieren
             #print(list)
         i += 1
@@ -326,24 +402,39 @@ def permanent_lifo():
     print("bewerteter Endbestand: {}\nbewerteter Materialverbrauch: {}".format(calculate(list),used_material))
     #print(calculate(list))
 
-def find_lofo(list):
+def find_lofo(list, minimal = 0):
     check = []
+    i = 0
     for a in list:
+        if i > minimal:
+            break
         if float(a[0]) > 0:
             check.append(float(a[1]))
+            i += 1
         else:
+            if not check:
+                check.append(0)
             check.append(0)
+            i += 1
     max_val = max(check)
     index = check.index(max_val)
     return index
 
-def find_hifo(list):
+def find_hifo(list, minimal = 0):
     check = []
+    i = 0
     for a in list:
+        if i > minimal:
+            break
         if float(a[0]) > 0:
             check.append(float(a[1]))
+            i += 1
         else:
-            check.append(max(check)+1)
+            if not check:
+                check.append(99999999999)
+            else:
+                check.append(max(check)+1)
+            i += 1
     max_val = min(check)
     index = check.index(max_val)
     return index
