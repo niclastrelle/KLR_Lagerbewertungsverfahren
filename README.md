@@ -14,24 +14,19 @@ Im Spezifischen sind schon integriert:
 10. gleitende Durchschnittsmethode - "gl_dm"
 
 
-## Schrittanleitung zur Nutzung
+### Schrittanleitung zur Nutzung
 
-Erstelle eine .csv Datei in dem folgenden Format: 
-
+Erstelle eine .csv Datei in dem folgenden Format:   
 Quantität, Preis
 
-Diese muss im selben Verzeichnis, wie die Lagerbewertungsverfahren.py Datei befinden. Der Standard-Seperator ist ",". Es muss also für Kommazahlen ein "." verwendet werden.
-Falls es nur einen Abgang gibt, dann wird der Preis weggelassen und ein negatives Vorzeichen vor dem Wert angegeben.
+Diese muss im selben Verzeichnis, wie die Lagerbewertungsverfahren.py Datei platziert werden. Der Standard-Seperator ist ",". Es muss also für Kommazahlen ein "." verwendet werden.
+Falls es einen Abgang gibt, dann wird der Preis weggelassen und ein negatives Vorzeichen vor dem Wert angegeben.
 Es gibt eine Beispieldatei. Daran kann sich orientiert werden.
 
-Zur Ausführung in die Konsole eingeben:
+Zur Ausführung eines Lagerbewertungsverfahrens in die Konsole eingeben:
 
 ```
-python main.py <Bewertungsmethode>
+python Lagerbewertungsverfahren.py <Bewertungsmethode>
 ```
-
-## Hinweise zur Interpretation der Ergebnisse
-Das Ergebnis ist eine Liste, welche die aktuellen Bestände darstellt. Bei Bedarf kann ein weiterer print-Befehl auskommentiert werden, um die Zwischenschritte auch auszugeben.
-Diese Stelle ist markiert.
 
 Ergebnisse werden in der Konsole ausgegeben
